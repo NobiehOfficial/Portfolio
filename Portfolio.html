@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wokorach Norbert — Graphic Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0f;
+    --surface:#131318;
+    --line:#242430;
+    --text:#f4f4f7;
+    --muted:#8b8b9a;
+    --accent:#c6ff3d;
+    --radius:16px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  ::selection{background:var(--accent);color:#0b0b0f}
+
+  .wrap{
+    width:100%;
+    max-width:1180px;
+    margin-inline:auto;
+    padding-inline:clamp(1.25rem,4vw,3rem);
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:1rem;
+    padding:1rem clamp(1.25rem,4vw,3rem);
+    background:rgba(11,11,15,.72);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;font-size:1.05rem;letter-spacing:-.02em;
+  }
+  .logo span{color:var(--accent)}
+  .nav-links{display:flex;gap:clamp(1rem,3vw,2rem);font-size:.9rem;color:var(--muted)}
+  .nav-links a{transition:color .2s}
+  .nav-links a:hover{color:var(--text)}
+  .nav-cta{
+    font-size:.85rem;font-weight:600;
+    padding:.55rem 1.1rem;border-radius:999px;
+    background:var(--accent);color:#0b0b0f;
+    transition:transform .2s, box-shadow .2s;
+  }
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px -8px var(--accent)}
+  .nav-links{display:none}
+  @media(min-width:720px){.nav-links{display:flex}}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:clamp(3.5rem,9vw,7rem) 0 clamp(2.5rem,5vw,4rem)}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:.55rem;
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:1.5rem;
+  }
+  .dot{
+    width:7px;height:7px;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 0 4px rgba(198,255,61,.15);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{50%{box-shadow:0 0 0 8px rgba(198,255,61,0)}}
+
+  .hero h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(2.7rem,9vw,6.5rem);
+    line-height:.95;
+    letter-spacing:-.035em;
+  }
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero-foot{
+    display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;
+    gap:2rem;margin-top:clamp(1.75rem,4vw,2.75rem);
+  }
+  .hero-foot p{max-width:44ch;color:var(--muted);font-size:clamp(.95rem,1.6vw,1.05rem)}
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;
+    padding:.85rem 1.5rem;border-radius:999px;
+    font-weight:600;font-size:.95rem;
+    background:var(--text);color:#0b0b0f;
+    transition:transform .25s, background .25s;
+    white-space:nowrap;
+  }
+  .btn:hover{transform:translateY(-2px);background:var(--accent)}
+  .btn svg{transition:transform .25s}
+  .btn:hover svg{transform:translate(3px,-3px)}
+
+  /* ---------- MARQUEE ---------- */
+  .marquee{
+    border-block:1px solid var(--line);
+    background:var(--surface);
+    padding:.85rem 0;
+    overflow:hidden;
+  }
+  .marquee__track{display:flex;width:max-content;animation:scroll 32s linear infinite}
+  .marquee__group{display:flex;gap:2.5rem;padding-right:2.5rem;align-items:center}
+  .marquee__group span{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.9rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);white-space:nowrap;
+  }
+  .marquee__group span::after{content:'✦';margin-left:2.5rem;color:var(--accent);font-size:.7rem}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding-block:clamp(3.5rem,7vw,6rem)}
+  .sec-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    gap:1.5rem;flex-wrap:wrap;margin-bottom:clamp(1.75rem,3.5vw,2.75rem);
+  }
+  .sec-head h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(1.6rem,4vw,2.6rem);
+    letter-spacing:-.03em;font-weight:700;line-height:1.05;
+  }
+  .sec-head span{font-size:.85rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+
+  /* ---------- WORK ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:clamp(1rem,2.2vw,1.75rem);
+  }
+  .card{display:block}
+  .card__media{
+    position:relative;
+    aspect-ratio:1;
+    border-radius:var(--radius);
+    overflow:hidden;
+    background:var(--surface);
+  }
+  .card__media img{
+    width:100%;height:100%;object-fit:contain;
+    transition:transform .4s ease;
+  }
+  .card:hover .card__media img{transform:scale(1.03)}
+  .pdf-preview{
+    display:grid;place-content:center;justify-items:center;gap:.8rem;
+    background:linear-gradient(145deg,#20202b,#131318 70%);
+    color:var(--accent);
+  }
+  .pdf-preview svg{width:clamp(3rem,8vw,4.5rem);height:auto}
+  .pdf-preview span{
+    font-size:.75rem;font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .card__meta{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:1rem;padding-top:.75rem;
+  }
+  .card__meta h3{font-size:1rem;font-weight:600;letter-spacing:-.01em}
+  .card__meta p{font-size:.82rem;color:var(--muted)}
+
+  /* ---------- ABOUT ---------- */
+  .about{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:clamp(1.75rem,4vw,3.5rem);
+    border-top:1px solid var(--line);
+    padding-top:clamp(2.5rem,5vw,4rem);
+  }
+  @media(min-width:840px){.about{grid-template-columns:1fr 1.15fr;align-items:start}}
+  .about h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(1.6rem,4vw,2.6rem);
+    letter-spacing:-.03em;line-height:1.05;
+  }
+  .about h2 em{font-style:normal;color:var(--accent)}
+  .about p{color:var(--muted);margin-bottom:1.1rem;font-size:1.02rem}
+  .about p strong{color:var(--text);font-weight:500}
+  .stats{display:flex;gap:2.5rem;margin-top:2rem;flex-wrap:wrap}
+  .stat b{
+    display:block;font-family:'Space Grotesk',sans-serif;
+    font-size:1.9rem;font-weight:700;letter-spacing:-.02em;color:var(--accent);
+  }
+  .stat span{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+
+  /* ---------- SERVICES ---------- */
+  .services{border-top:1px solid var(--line);padding-top:clamp(2.5rem,5vw,4rem)}
+  .svc{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:1.25rem clamp(1.25rem,4vw,3rem);
+    padding:1.6rem 0;
+    border-bottom:1px solid var(--line);
+    align-items:start;
+    transition:padding-left .3s, color .3s;
+  }
+  .svc:hover{padding-left:.75rem}
+  .svc__num{font-family:'Space Grotesk',sans-serif;font-size:.8rem;color:var(--muted);padding-top:.4rem}
+  .svc__body h3{
+    font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.4vw,1.5rem);
+    font-weight:500;letter-spacing:-.01em;margin-bottom:.35rem;
+  }
+  .svc__body p{color:var(--muted);font-size:.92rem;max-width:52ch}
+
+  /* ---------- CONTACT ---------- */
+  .contact{border-top:1px solid var(--line);text-align:center}
+  .contact h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(2rem,6.5vw,4.2rem);
+    letter-spacing:-.035em;line-height:1;margin-bottom:1.5rem;
+  }
+  .contact h2 em{font-style:normal;color:var(--accent)}
+  .contact p{color:var(--muted);max-width:48ch;margin:0 auto 2.25rem}
+  .mail{
+    display:inline-block;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(1rem,2.6vw,1.5rem);
+    font-weight:500;
+    padding-bottom:.25rem;
+    border-bottom:2px solid var(--accent);
+    transition:color .25s;
+  }
+  .mail:hover{color:var(--accent)}
+  .socials{display:flex;justify-content:center;gap:.75rem;margin-top:2.5rem;flex-wrap:wrap}
+  .socials a{
+    font-size:.85rem;color:var(--muted);
+    padding:.5rem 1.1rem;border:1px solid var(--line);border-radius:999px;
+    transition:.25s;
+  }
+  .socials a:hover{color:var(--text);border-color:var(--text);transform:translateY(-2px)}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:1.75rem 0;
+    display:flex;justify-content:space-between;align-items:center;
+    gap:1rem;flex-wrap:wrap;
+    font-size:.82rem;color:var(--muted);
+  }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#" class="logo">Wokorach Norbert<span>.</span></a>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Let's talk</a>
+</nav>
+
+<header class="hero wrap">
+  <div class="eyebrow"><span class="dot"></span> Graphic designer · Gulu, Uganda</div>
+  <h1>Design that<br>makes people <em>stop</em><br>scrolling.</h1>
+  <div class="hero-foot">
+    <p>Brand identity, packaging and digital design for ambitious teams.
+       Clear ideas, thoughtful craft, and visuals people remember.</p>
+    <a href="#work" class="btn">
+      View selected work
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+    </a>
+  </div>
+</header>
+
+<div class="marquee">
+  <div class="marquee__track">
+    <div class="marquee__group">
+      <span>Brand Identity</span><span>Packaging</span><span>Art Direction</span>
+      <span>Social Kits</span><span>Editorial</span><span>Motion Graphics</span>
+    </div>
+    <div class="marquee__group" aria-hidden="true">
+      <span>Brand Identity</span><span>Packaging</span><span>Art Direction</span>
+      <span>Social Kits</span><span>Editorial</span><span>Motion Graphics</span>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- WORK -->
+  <section id="work" class="wrap">
+    <div class="sec-head reveal">
+      <h2>Selected Work</h2>
+      <span>33 projects · visual design &amp; documents</span>
+    </div>
+
+    <div class="grid">
+      <article class="card reveal">
+        <div class="card__media"><img src="images/rotaract-retreat.png" alt="Rotaract Club of Gulu Sunset retreat poster" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Club Retreat</h3><p>Rotaract Gulu Sunset · Event poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/sundowners-fellowship.png" alt="Sundowners fellowship event poster featuring a literary discussion" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Sundowners Fellowship</h3><p>Event promotion · Social design</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/district-corporate-membership.png" alt="Rotaract District 9213 corporate membership webinar poster" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Corporate Membership</h3><p>District 9213 · Webinar promotion</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/nebbi-central-match.png" alt="Nebbi Central FC versus Okollo Central FC match poster" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Nebbi Central vs Okollo Central</h3><p>Football · Match-day poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/cricket-results.png" alt="Northern Cricket Hub U15 softball cricket challenge results graphic" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Cricket Challenge Results</h3><p>Northern Cricket Hub · Sports graphic</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/sundowners-social-evening.png" alt="Sundowners social evening event poster" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Sundowners Social Evening</h3><p>Event promotion · Social design</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/hsc-technick-metal-removal.png" alt="HSC Technik heavy metal removal service graphic" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Heavy Metal Removal</h3><p>HSC Technik · Service promotion</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/district-foundation-session.png" alt="Rotary Foundation learning session poster about giving to the foundation" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Why Do We Give?</h3><p>Rotary Foundation · Learning session</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/closed-club-assembly.png" alt="Rotaract Club of Mukono closed club assembly poster" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Closed Club Assembly</h3><p>Rotaract Mukono · Event poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/emotional-intelligence-session.png" alt="Emotional intelligence and conflict resolution training poster" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Emotional Intelligence</h3><p>District 9213 · Training promotion</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/sustaining-member-recognition.png" alt="Rotary Foundation sustaining member recognition campaign graphic" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Sustaining Member Recognition</h3><p>Rotary Foundation · Campaign graphic</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/team-building-fellowship.png" alt="Sundowners fun and team-building fellowship poster" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Fun &amp; Team Building</h3><p>Club fellowship · Event poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/birthday-fred.png" alt="Happy birthday greeting graphic for Fred" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Birthday Greeting</h3><p>Rotaract Gulu Sunset · Social graphic</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/rotary-gulu-city-fellowship.png" alt="Rotary Club of Gulu City membership fellowship event poster" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Reigniting the Membership Spark</h3><p>Rotary Gulu City · Fellowship poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/rotaract-kyambogo-drr-visit.png" alt="Official District Rotaract Representative visit poster for Rotaract Club of Kyambogo" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Official DRR Visit</h3><p>Rotaract Kyambogo · Event poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/arua-city-u17-cricket.png" alt="Arua City under-17 girls cricket tournament poster" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Arua City U-17 Girls Cricket</h3><p>Sports tournament · Poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/sonde-drr-visit.png" alt="Official District Rotaract Representative visit poster for Rotaract Club of Sonde" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Official DRR Visit</h3><p>Rotaract Sonde · Event poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/sundowners-november-calendar.png" alt="Sundowners November monthly events calendar graphic" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>November Calendar</h3><p>Sundowners · Monthly events graphic</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/grants-application.png" alt="Rotary District 9213 grants application and proposal writing session poster" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Grants Application &amp; Proposal Writing</h3><p>Rotary District 9213 · Session poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/music-and-mental-health-fellowship.png" alt="Sundowners fellowship poster about music and mental health" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Music &amp; Mental Health</h3><p>Club fellowship · Event poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/interact-day.png" alt="Rotaract District 9213 Interact Day celebration poster" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Interact Day</h3><p>District 9213 · Event promotion</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/gulu-city-q1-review.png" alt="Rotary Club of Gulu City first-quarter review poster" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Gulu City Q1 Review</h3><p>Rotary Gulu City · Event poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/ndejje-drr-visit.png" alt="Official District Rotaract Representative visit poster for Rotaract Club of Ndejje University" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Official DRR Visit</h3><p>Rotaract Ndejje University · Event poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/drr-schedule.png" alt="Rotaract District 9213 District Rotaract Representative weekly schedule graphic" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>DRR's Schedule</h3><p>District 9213 · Schedule graphic</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/every-gift-counts-session.png" alt="Rotaract Club of Gulu Sunset learning session poster about the Rotary Foundation" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Every Gift Counts</h3><p>Rotary Foundation · Learning session</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/sustainability-session.png" alt="Sundowners session poster about sustainability through the lens of survival" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Sustainability Through the Lens of Survival</h3><p>Club learning session · Event poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/birthday-atukunda.png" alt="Rotary District 9213 birthday greeting for Atukunda Barungi" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Birthday Greeting</h3><p>District 9213 · Social graphic</p></div></div>
+      </article>
+      <a class="card reveal" href="documents/lawirwodi-7s.pdf" target="_blank" rel="noopener">
+        <div class="card__media pdf-preview" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5h16l9 9v29H12z"/><path d="M28 5v10h9M17 25h15M17 31h15M17 37h10"/></svg><span>Open PDF</span></div>
+        <div class="card__meta"><div><h3>Lawirwodi 7s</h3><p>PDF portfolio project</p></div></div>
+      </a>
+      <a class="card reveal" href="documents/wall-hanging.pdf" target="_blank" rel="noopener">
+        <div class="card__media pdf-preview" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5h16l9 9v29H12z"/><path d="M28 5v10h9M17 25h15M17 31h15M17 37h10"/></svg><span>Open PDF</span></div>
+        <div class="card__meta"><div><h3>Wall Hanging</h3><p>PDF portfolio project</p></div></div>
+      </a>
+      <a class="card reveal" href="documents/nathan.pdf" target="_blank" rel="noopener">
+        <div class="card__media pdf-preview" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5h16l9 9v29H12z"/><path d="M28 5v10h9M17 25h15M17 31h15M17 37h10"/></svg><span>Open PDF</span></div>
+        <div class="card__meta"><div><h3>Nathan</h3><p>PDF portfolio project</p></div></div>
+      </a>
+      <a class="card reveal" href="documents/hsctechnik-banner.pdf" target="_blank" rel="noopener">
+        <div class="card__media pdf-preview" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5h16l9 9v29H12z"/><path d="M28 5v10h9M17 25h15M17 31h15M17 37h10"/></svg><span>Open PDF</span></div>
+        <div class="card__meta"><div><h3>HSCTECHNIK Banner</h3><p>PDF portfolio project</p></div></div>
+      </a>
+      <a class="card reveal" href="documents/drrs-coverpage.pdf" target="_blank" rel="noopener">
+        <div class="card__media pdf-preview" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5h16l9 9v29H12z"/><path d="M28 5v10h9M17 25h15M17 31h15M17 37h10"/></svg><span>Open PDF</span></div>
+        <div class="card__meta"><div><h3>DRRs Coverpage</h3><p>PDF portfolio project</p></div></div>
+      </a>
+      <a class="card reveal" href="documents/coverpage-st-francis.pdf" target="_blank" rel="noopener">
+        <div class="card__media pdf-preview" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5h16l9 9v29H12z"/><path d="M28 5v10h9M17 25h15M17 31h15M17 37h10"/></svg><span>Open PDF</span></div>
+        <div class="card__meta"><div><h3>Coverpage St. Francis</h3><p>PDF portfolio project</p></div></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="wrap">
+    <div class="about reveal">
+      <h2>Designer, <em>not decorator.</em></h2>
+      <div>
+        <p><strong>I'm Wokorach Norbert</strong> — a graphic designer based in Gulu, Uganda,
+           working with brands that want to be recognized, not just seen. My work sits where strategy meets craft:
+           clear thinking, obsessive typography, and a strong point of view.</p>
+        <p>I focus on considered visual identities, digital design, and art direction,
+           bringing clarity and care to every project.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="wrap services">
+    <div class="sec-head reveal">
+      <h2>What I do</h2>
+      <span>Services</span>
+    </div>
+
+    <div class="svc reveal">
+      <div class="svc__num">01</div>
+      <div class="svc__body">
+        <h3>Brand Identity</h3>
+        <p>Logo systems, typography, color, and a guideline document your whole team can actually use.</p>
+      </div>
+    </div>
+    <div class="svc reveal">
+      <div class="svc__num">02</div>
+      <div class="svc__body">
+        <h3>Packaging &amp; Print</h3>
+        <p>Labels, boxes, and editorial layouts — designed for shelf impact and production-ready files.</p>
+      </div>
+    </div>
+    <div class="svc reveal">
+      <div class="svc__num">03</div>
+      <div class="svc__body">
+        <h3>Digital &amp; Social</h3>
+        <p>Templates, campaign assets, and ad creative that stay consistent across every channel.</p>
+      </div>
+    </div>
+    <div class="svc reveal">
+      <div class="svc__num">04</div>
+      <div class="svc__body">
+        <h3>Art Direction</h3>
+        <p>Concept, moodboards, and shoot direction so the final visuals match the brand story.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="wrap contact">
+    <div class="reveal">
+      <h2>Got a project?<br><em>Let's make it good.</em></h2>
+      <p>Have a project in mind? Get in touch to discuss what you're building.</p>
+      <a href="mailto:norbertwokoz@gmail.com" class="mail">norbertwokoz@gmail.com</a>
+      <div class="socials">
+        <a href="https://wa.me/256760542683" target="_blank" rel="noopener">WhatsApp · 0760 542 683</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© <span id="year"></span> Wokorach Norbert — All rights reserved.</span>
+  <span>Gulu, Uganda · Working worldwide</span>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = (i % 3) * 80 + 'ms';
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
