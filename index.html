@@ -24,7 +24,7 @@
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;scroll-padding-top:5rem}
   section[id]{scroll-margin-top:5rem}
   body{
     background:var(--bg);
@@ -84,7 +84,7 @@
   @media(min-width:720px){.nav-links{display:flex}}
 
   /* ---------- HERO ---------- */
-  .hero{padding:clamp(3.5rem,9vw,7rem) 0 clamp(2.5rem,5vw,4rem)}
+  .hero{padding-block:clamp(4rem,10vw,8rem) clamp(2.5rem,5vw,4rem)}
   .eyebrow{
     display:inline-flex;align-items:center;gap:.55rem;
     font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
@@ -100,16 +100,36 @@
   .hero h1{
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
-    font-size:clamp(2.7rem,9vw,6.5rem);
-    line-height:.95;
-    letter-spacing:-.035em;
+    font-size:clamp(3.35rem,11vw,8.5rem);
+    line-height:.88;
+    letter-spacing:-.075em;
+    text-wrap:balance;
   }
-  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero h1 em{
+    position:relative;display:inline-block;
+    padding-inline:.04em;
+    color:var(--accent);font-style:normal;
+    text-shadow:0 .04em 0 rgba(198,255,61,.12);
+  }
+  .hero h1 em::after{
+    content:"";position:absolute;left:.04em;right:.02em;bottom:-.1em;
+    height:.055em;border-radius:999px;background:var(--accent);
+    transform:rotate(-2deg);
+  }
   .hero-foot{
     display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;
     gap:2rem;margin-top:clamp(1.75rem,4vw,2.75rem);
   }
   .hero-foot p{max-width:44ch;color:var(--muted);font-size:clamp(.95rem,1.6vw,1.05rem)}
+  .hero-actions{display:flex;align-items:center;gap:1.5rem}
+  .hero-stamp{
+    display:grid;place-content:center;
+    width:5.25rem;aspect-ratio:1;border:1px solid var(--line);border-radius:50%;
+    color:var(--muted);font-size:.55rem;font-weight:600;line-height:1.4;
+    letter-spacing:.12em;text-align:center;text-transform:uppercase;
+    transform:rotate(8deg);
+  }
+  .hero-stamp span{color:var(--accent)}
   .btn{
     display:inline-flex;align-items:center;gap:.6rem;
     padding:.85rem 1.5rem;border-radius:999px;
@@ -125,7 +145,7 @@
   /* ---------- MARQUEE ---------- */
   .marquee{
     border-block:1px solid var(--line);
-    background:var(--surface);
+    background:var(--accent);
     padding:.85rem 0;
     overflow:hidden;
   }
@@ -134,9 +154,9 @@
   .marquee__group span{
     font-family:'Space Grotesk',sans-serif;
     font-size:.9rem;letter-spacing:.08em;text-transform:uppercase;
-    color:var(--muted);white-space:nowrap;
+    color:var(--bg);white-space:nowrap;
   }
-  .marquee__group span::after{content:'✦';margin-left:2.5rem;color:var(--accent);font-size:.7rem}
+  .marquee__group span::after{content:'✳';margin-left:2.5rem;color:var(--bg);font-size:.7rem}
   @keyframes scroll{to{transform:translateX(-50%)}}
 
   /* ---------- SECTIONS ---------- */
@@ -155,22 +175,23 @@
   /* ---------- WORK ---------- */
   .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:clamp(1rem,2.2vw,1.75rem);
+    grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));
+    gap:clamp(1.5rem,2.8vw,2.25rem) clamp(1rem,2.2vw,1.75rem);
+    counter-reset:project;
   }
-  .card{display:block}
+  .card{display:block;min-width:0;counter-increment:project}
   .card__media{
     position:relative;
     aspect-ratio:1;
     border-radius:var(--radius);
     overflow:hidden;
-    background:var(--surface);
+    background:radial-gradient(ellipse at 50% 45%,#20202a 0,var(--surface) 72%);
   }
   .card__media img{
     width:100%;height:100%;object-fit:contain;
-    transition:transform .4s ease;
+    transition:transform .6s cubic-bezier(.2,.7,.2,1);
   }
-  .card:hover .card__media img{transform:scale(1.03)}
+  .card:hover .card__media img{transform:scale(1.045)}
   .pdf-preview{
     display:grid;place-content:center;justify-items:center;gap:.8rem;
     background:linear-gradient(145deg,#20202b,#131318 70%);
@@ -182,11 +203,24 @@
     text-transform:uppercase;color:var(--muted);
   }
   .card__meta{
-    display:flex;align-items:center;justify-content:space-between;
-    gap:1rem;padding-top:.75rem;
+    display:grid;grid-template-columns:auto 1fr;align-items:start;
+    gap:.8rem;padding-top:.85rem;
   }
-  .card__meta h3{font-size:1rem;font-weight:600;letter-spacing:-.01em}
+  .card__meta::before{
+    content:counter(project,decimal-leading-zero);
+    padding-top:.13rem;color:var(--accent);
+    font-family:'Space Grotesk',sans-serif;font-size:.7rem;font-weight:700;
+    letter-spacing:.08em;
+  }
+  .card__meta h3{font-size:1rem;font-weight:600;letter-spacing:-.01em;transition:color .2s}
+  .card:hover .card__meta h3{color:var(--accent)}
   .card__meta p{font-size:.82rem;color:var(--muted)}
+  @media(min-width:1000px){
+    .grid{grid-template-columns:repeat(12,minmax(0,1fr))}
+    .card{grid-column:span 4}
+    .card:nth-child(-n+2){grid-column:span 6}
+    .card:nth-child(-n+2) .card__media{aspect-ratio:1.25}
+  }
 
   /* ---------- ABOUT ---------- */
   .about{
@@ -293,14 +327,17 @@
 
 <header class="hero wrap">
   <div class="eyebrow"><span class="dot"></span> Graphic designer · Gulu, Uganda</div>
-  <h1>Design that<br>makes people <em>stop</em><br>scrolling.</h1>
+  <h1>Less noise.<br>More <em>meaning.</em></h1>
   <div class="hero-foot">
     <p>Brand identity, packaging and digital design for ambitious teams.
        Clear ideas, thoughtful craft, and visuals people remember.</p>
-    <a href="#work" class="btn">
-      View selected work
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
-    </a>
+      <div class="hero-actions">
+        <a href="#work" class="btn">
+          View selected work
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+        </a>
+        <div class="hero-stamp" aria-hidden="true">Made in<br><span>Gulu</span><br>Uganda</div>
+      </div>
   </div>
 </header>
 
@@ -323,7 +360,7 @@
   <section id="work" class="wrap">
     <div class="sec-head reveal">
       <h2>Selected Work</h2>
-      <span>33 projects · visual design &amp; documents</span>
+      <span>41 projects · visual design &amp; documents</span>
     </div>
 
     <div class="grid">
@@ -434,6 +471,38 @@
       <article class="card reveal">
         <div class="card__media"><img src="images/birthday-atukunda.png" alt="Rotary District 9213 birthday greeting for Atukunda Barungi" loading="lazy" decoding="async"></div>
         <div class="card__meta"><div><h3>Birthday Greeting</h3><p>District 9213 · Social graphic</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/wend-africa-signage.png" alt="Wend Africa Creative Industries signage design for GROW Enterprises for Women" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Wend Africa Signage</h3><p>GROW Enterprises for Women · Signage</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/relationships-that-make-or-break-clubs.png" alt="Rotaract District 9213 speaker session poster about relationships that make or break clubs" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Relationships That Make or Break Clubs</h3><p>Rotaract District 9213 · Speaker session</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/building-stronger-rotary-bonds.png" alt="Rotary Club of Gulu City fellowship poster about building stronger Rotary bonds" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Building Stronger Rotary Bonds</h3><p>Rotary Gulu City · Fellowship poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/trf-recognition-fellowship.png" alt="Rotaract District 9213 TRF recognition fellowship and new members induction poster" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>TRF Recognition Fellowship</h3><p>Rotaract District 9213 · Event poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/chivalry-expectations-gender-roles.png" alt="Rotaract Club of Gulu Sunset panel discussion poster about chivalry, expectations, and gender roles" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Chivalry, Expectations &amp; Gender Roles</h3><p>Rotaract Gulu Sunset · Panel discussion</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/strategic-grant-acquisition.png" alt="Rotaract Club of Gulu Sunset masterclass poster about strategic grant acquisition" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Strategic Grant Acquisition</h3><p>Rotaract Gulu Sunset · Masterclass poster</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/media-training-journalists.png" alt="Fourth Hub media training poster for journalists covering the Gulu City Marathon" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Media Training for Journalists</h3><p>Fourth Hub · Training promotion</p></div></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__media"><img src="images/global-grants-application.png" alt="Rotary Club of Gulu City fellowship poster about the global grants application and approval process" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><div><h3>Global Grants Application</h3><p>Rotary Gulu City · Fellowship poster</p></div></div>
       </article>
       <a class="card reveal" href="documents/lawirwodi-7s.pdf" target="_blank" rel="noopener">
         <div class="card__media pdf-preview" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5h16l9 9v29H12z"/><path d="M28 5v10h9M17 25h15M17 31h15M17 37h10"/></svg><span>Open PDF</span></div>
