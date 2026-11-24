@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wokorach Norbert — Graphic Designer</title>
+<meta name="description" content="Wokorach Norbert is a graphic designer based in Gulu, Uganda, creating thoughtful brand identities, packaging, and digital design.">
+<meta name="theme-color" content="#0b0b0f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Wokorach Norbert — Graphic Designer">
+<meta property="og:description" content="Brand identity, packaging, and digital design for ambitious teams.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -20,6 +25,7 @@
 
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
+  section[id]{scroll-margin-top:5rem}
   body{
     background:var(--bg);
     color:var(--text);
@@ -29,8 +35,17 @@
     overflow-x:hidden;
   }
   a{color:inherit;text-decoration:none}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   img{max-width:100%;display:block}
   ::selection{background:var(--accent);color:#0b0b0f}
+
+  .skip-link{
+    position:fixed;top:.75rem;left:.75rem;z-index:100;
+    padding:.7rem 1rem;border-radius:8px;
+    background:var(--accent);color:#0b0b0f;font-weight:600;
+    transform:translateY(-160%);transition:transform .2s;
+  }
+  .skip-link:focus{transform:translateY(0)}
 
   .wrap{
     width:100%;
@@ -253,17 +268,19 @@
   }
 
   /* ---------- REVEAL ---------- */
-  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
-  .reveal.in{opacity:1;transform:none}
+  .js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .js .reveal.in{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important}
-    .reveal{opacity:1;transform:none}
+    html{scroll-behavior:auto}
+    .reveal,.js .reveal{opacity:1;transform:none}
   }
 </style>
 </head>
 <body>
 
-<nav class="nav">
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Primary navigation">
   <a href="#" class="logo">Wokorach Norbert<span>.</span></a>
   <div class="nav-links">
     <a href="#work">Work</a>
@@ -287,7 +304,7 @@
   </div>
 </header>
 
-<div class="marquee">
+<div class="marquee" aria-hidden="true">
   <div class="marquee__track">
     <div class="marquee__group">
       <span>Brand Identity</span><span>Packaging</span><span>Art Direction</span>
@@ -300,7 +317,7 @@
   </div>
 </div>
 
-<main>
+<main id="main" tabindex="-1">
 
   <!-- WORK -->
   <section id="work" class="wrap">
@@ -503,7 +520,7 @@
       <p>Have a project in mind? Get in touch to discuss what you're building.</p>
       <a href="mailto:norbertwokoz@gmail.com" class="mail">norbertwokoz@gmail.com</a>
       <div class="socials">
-        <a href="https://wa.me/256760542683" target="_blank" rel="noopener">WhatsApp · 0760 542 683</a>
+        <a href="https://wa.me/256760542683" target="_blank" rel="noopener noreferrer">WhatsApp · 0760 542 683</a>
       </div>
     </div>
   </section>
@@ -516,20 +533,21 @@
 </footer>
 
 <script>
-  // Reveal on scroll
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        entry.target.style.transitionDelay = (i % 3) * 80 + 'ms';
-        entry.target.classList.add('in');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  if ('IntersectionObserver' in window) {
+    document.documentElement.classList.add('js');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.style.transitionDelay = (i % 3) * 80 + 'ms';
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  }
 
-  // Year
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
